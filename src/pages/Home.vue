@@ -1,5 +1,10 @@
 <template>
   <van-pull-refresh v-model="loading" @refresh="onRefresh">
+    <van-swipe :autoplay="3000" lazy-render>
+      <van-swipe-item v-for="image in swipe" :key="image" @click="CarouselClick(image.url)">
+        <img :src="image.img" style="width: 100%;height: 200px;"/>
+      </van-swipe-item>
+    </van-swipe>
     <div style="padding-bottom: 10px">
       <div style="margin: 10px;">
         <div style="margin-top: 15px">
@@ -7,11 +12,6 @@
                       style="border-radius: 15px;margin-bottom: -5px" @search="searchClick"/>
         </div>
         <br>
-        <van-swipe :autoplay="3000" lazy-render style="border-radius: 10px;">
-          <van-swipe-item v-for="image in swipe" :key="image" @click="CarouselClick(image.url)">
-            <img :src="image.img" style="width: 100%;height: 200px;"/>
-          </van-swipe-item>
-        </van-swipe>
         <div style="display: flex;align-items: center;">
           <van-icon name="fire-o"/>
           <b style="margin: 10px 10px 15px;">热门投票</b>

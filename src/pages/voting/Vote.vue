@@ -59,7 +59,7 @@
         />
         <van-tabs v-model:active="active" animated background="rgba(255,255,255,0.5)" style="margin: 10px 0 50px 0"
                   swipeable>
-          <van-tab title="参与人员">
+          <van-tab title="参与列表">
             <div class="tabs">
               <div style="display: flex; flex-wrap: wrap;">
                 <div v-if="Participants.length==0" style="width: 100%;text-align: center">

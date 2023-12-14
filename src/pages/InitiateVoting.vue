@@ -18,7 +18,7 @@
       <van-field v-model="title" label="投票标题" maxlength="15" placeholder="请输入标题" required/>
       <van-field v-model="rules" autosize label="规则" label-align="top" maxlength="150"
                  placeholder="请输入投票规则及奖品" required show-word-limit type="textarea"/>
-      <van-field v-model="vote_num" label="投票次数" placeholder="请输入投票次数" required type="number"/>
+      <van-field v-model="vote_num" label="每日投票次数" placeholder="请输入投票次数" required type="number"/>
       <van-field v-model="backgroundMusic" label="背景音乐" placeholder="音乐直链(选填)">
         <template #button>
           <!--          <van-button size="small" type="default" @click="选择音乐">选择音乐</van-button>-->
@@ -105,6 +105,13 @@ export default {
               message: '投票发布成功！',
             }).then(() => {
               location.reload()
+            });
+          } else {
+            closeToast();
+            showDialog({
+              title: '提示',
+              message: res.msg,
+            }).then(() => {
             });
           }
         }).catch(err => {
