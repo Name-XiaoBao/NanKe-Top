@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="/favicon.ico" rel="icon">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title>南科Top</title>
+    <script>
+        document.addEventListener('mousewheel', function (e) {
+            e = e || window.event;
+            if ((e.wheelDelta && event.ctrlKey) || e.detail) {
+                event.preventDefault();
+            }
+        }, {
+            capture: false,
+            passive: false
+        });
+    </script>
+</head>
+<body>
+<div id="app"></div>
+<script src="/src/main.js" type="module"></script>
+</body>
+</html>
