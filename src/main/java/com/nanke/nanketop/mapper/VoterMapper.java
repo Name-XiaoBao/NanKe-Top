@@ -2,6 +2,7 @@ package com.nanke.nanketop.mapper;
 
 import com.nanke.nanketop.model.Vote;
 import com.nanke.nanketop.model.Voter;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -31,4 +32,10 @@ public interface VoterMapper {
     Vote vote(long uid);
     @Select("SELECT * FROM voter WHERE vote_uid = #{voteUid}")
     List<Voter> voter(long voteUid);
+
+    /**
+     * 清空voter表
+     */
+    @Delete("TRUNCATE TABLE voter")
+    void truncateVoterTable();
 }

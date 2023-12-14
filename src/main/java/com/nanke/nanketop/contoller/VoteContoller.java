@@ -1,6 +1,7 @@
 package com.nanke.nanketop.contoller;
 
 import com.nanke.nanketop.Util.Json;
+import com.nanke.nanketop.Util.LimitRequest;
 import com.nanke.nanketop.Util.Uuid;
 import com.nanke.nanketop.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class VoteContoller {
     private VoteService voteService;
     Json json = new Json();
     Uuid uuid = new Uuid();
-
+    @LimitRequest(time = 86400000, count = 1,msg = "每24小时只能发布一次哦~\n距离上一次发布还不到24小时呢！")
     /**
      * 创建投票
      * @param user_username
