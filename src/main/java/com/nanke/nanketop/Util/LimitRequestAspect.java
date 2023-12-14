@@ -41,7 +41,7 @@ public class LimitRequestAspect {
         if (uCount >= limitRequest.count()) { // 超过次数，不执行目标方法
             //可以直接抛出异常
             Json error = new Json();
-            error.json(403,"接口访问次数超过限制\n请1-3分钟后再试",null);
+            error.json(403,limitRequest.msg(),null);
             return error;
         } else if (uCount == 0){ // 第一次请求时，设置开始有效时间
             map.put(request.getRemoteAddr(), uCount + 1, ExpirationPolicy.CREATED, limitRequest.time(), TimeUnit.MILLISECONDS);

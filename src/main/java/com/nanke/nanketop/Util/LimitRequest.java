@@ -13,4 +13,5 @@ import java.lang.annotation.*;
 public @interface LimitRequest {
     long time() default Integer.MAX_VALUE;
     int count() default Integer.MAX_VALUE;
+    String msg() default "接口访问次数超过限制";
 }
