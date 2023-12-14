@@ -28,7 +28,7 @@ public class VoterContoller {
             if (voterService.insertVoter(clientIp, voteUid, participatingUid)){
                 json.json(200,"投票成功", null);
             }else {
-                json.json(404,"投票次数已经没有啦~", null);
+                json.json(404,"今天的投票次数已经没有啦！\n请明天再来吧~", null);
             }
             return json;
         }catch (Exception e){

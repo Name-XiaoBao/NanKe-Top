@@ -21,7 +21,7 @@ public class CodeContoller {
      * @param email 邮箱账号
      * @return
      */
-    @LimitRequest(time = 60000,count = 1)
+    @LimitRequest(time = 60000,count = 1,msg = "一分钟只能发送一次哦~")
     @PostMapping("/getCode")
     public Json sendAuthCodeEmail(String email) {
         //随机验证码

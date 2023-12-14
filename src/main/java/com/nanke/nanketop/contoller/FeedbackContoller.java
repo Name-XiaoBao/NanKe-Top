@@ -13,7 +13,7 @@ public class FeedbackContoller {
     @Autowired
     private EmailUtil emailUtil;
     Json json=new Json();
-    @LimitRequest(time = 180000,count = 1)
+    @LimitRequest(time = 180000,count = 1,msg = "请求过于频繁")
     @RequestMapping("/Feedback")
     public Json Feedback(String Content, String ContactInformation) {
         try {
