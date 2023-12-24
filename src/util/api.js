@@ -310,17 +310,14 @@ export const updatePasswoed = (username, password) => {
         });
 }
 /**
- * 获取网易云音乐ID
+ * 获取网易云音乐
  * @param name
  * @returns {Promise<axios.AxiosResponse<any> | void>}
  */
-export const 获取网易云音乐ID = (name) => {
-    return axios.post('http://music.163.com/api/search/get/web', {
-        s: name,
-        type: 1,
-        offset: 0,
-        total: true,
-        limit: 10
+export const 获取网易云音乐 = (name, limit) => {
+    return axios.post('http://api.xbjstd.cn:6218/music', {
+        name: name,
+        limit: limit
     }, axiosConfig)
         .then(res => {
             return res.data;

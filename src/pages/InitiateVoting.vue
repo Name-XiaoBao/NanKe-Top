@@ -18,10 +18,10 @@
       <van-field v-model="title" label="投票标题" maxlength="15" placeholder="请输入标题" required/>
       <van-field v-model="rules" autosize label="规则" label-align="top" maxlength="150"
                  placeholder="请输入投票规则及奖品" required show-word-limit type="textarea"/>
-      <van-field v-model="vote_num" label="每日投票次数" placeholder="请输入投票次数" required type="number"/>
+      <van-field v-model="vote_num" label="日投票次数" placeholder="请输入投票次数" required type="number"/>
       <van-field v-model="backgroundMusic" label="背景音乐" placeholder="音乐直链(选填)">
         <template #button>
-          <!--          <van-button size="small" type="default" @click="选择音乐">选择音乐</van-button>-->
+          <van-button size="small" type="default" @click="选择音乐">选择音乐</van-button>
         </template>
       </van-field>
       <van-field v-model="registration_time" label="开始报名日期" label-align="top" placeholder="请选择日期"
@@ -40,8 +40,28 @@
       position="bottom"
       round
   >
-    <van-search v-model="musicName" placeholder="请输入音乐名称" @search="搜索音乐"/>
-
+    <van-search v-model="musicName" placeholder="请输入音乐名称(仅支持网易云)" @search="搜索音乐"/>
+    <div v-if="music_list.length === 0" style="text-align: center">
+      <img src="/SearchIsEmpty.png" style="width: 80%;height: 60%">
+      <p>暂无搜索内容</p>
+    </div>
+    <div v-for="(item, index) in music_list" v-else
+         :key="index" style="background: #e8e8e8;margin: 11px;padding: 1px;border-radius: 10px">
+      <van-card
+          :desc="item.Singer"
+          :thumb="item.Cover"
+          :title="item.name"
+      >
+        <template #price-top>
+          <audio :src="item.url" controls style="height: 25px;max-width: 100%"></audio>
+        </template>
+        <template #num>
+          <van-button block size="mini" style="border-radius: 10px;" type="default" @click="获取音乐直链(item.url)">
+            选择此音乐
+          </van-button>
+        </template>
+      </van-card>
+    </div>
   </van-popup>
 </template>
 <script>
@@ -50,9 +70,7 @@
 import {inject, ref} from "vue";
 import {closeToast, showDialog, showLoadingToast, showToast} from "vant";
 import router from "@/router";
-import {addVote, 获取网易云音乐ID} from "@/util/api";
-import {useRoute} from "vue-router";
-
+import {addVote, 获取网易云音乐} from "@/util/api";
 export default {
   setup() {
     const actives = inject('active');
@@ -155,10 +173,26 @@ export default {
       music.value = ref(true)
     }
     const musicName = ref(null)
+    const music_list = ref([])
     const 搜索音乐 = () => {
-      获取网易云音乐ID(musicName.value).then(res => {
-        console.log(res)
+      showLoadingToast({
+        duration: 0,
+        forbidClick: true,
+        message: '搜索音乐中...',
+      });
+      获取网易云音乐(musicName.value).then(res => {
+        if (res.code == 200) {
+          music_list.value = res.data
+          closeToast();
+        } else {
+          closeToast();
+          showToast("搜索失败")
+        }
       })
+    }
+    const 获取音乐直链 = (url) => {
+      backgroundMusic.value = url
+      music.value = false
     }
     return {
       afterRead,
@@ -177,7 +211,9 @@ export default {
       music,
       选择音乐,
       musicName,
-      搜索音乐
+      搜索音乐,
+      music_list,
+      获取音乐直链
     };
   }
 }
@@ -186,5 +222,17 @@ export default {
 <style scoped>
 body {
   background: #efefef;
+}
+
+audio::-webkit-media-controls-timeline {
+  display: none !important;
+}
+
+audio::-webkit-media-controls {
+  width: auto !important;
+}
+
+audio::-webkit-media-controls-volume-slider {
+  -webkit-appearance: none;
 }
 </style>
