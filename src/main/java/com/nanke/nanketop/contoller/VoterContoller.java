@@ -1,6 +1,6 @@
 package com.nanke.nanketop.contoller;
 
-import com.nanke.nanketop.Util.Json;
+import cn.xbjstd.xiaobao.util.Json;
 import com.nanke.nanketop.service.VoterService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;

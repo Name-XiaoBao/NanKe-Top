@@ -1,7 +1,7 @@
 package com.nanke.nanketop.contoller;
 
-import com.nanke.nanketop.Util.Json;
-import com.nanke.nanketop.Util.Uuid;
+import cn.xbjstd.xiaobao.util.Json;
+import cn.xbjstd.xiaobao.util.Uuid;
 import com.nanke.nanketop.service.UserParticipateinService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

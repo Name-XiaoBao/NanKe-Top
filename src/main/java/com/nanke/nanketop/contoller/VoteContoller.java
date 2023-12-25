@@ -1,8 +1,8 @@
 package com.nanke.nanketop.contoller;
 
-import com.nanke.nanketop.Util.Json;
-import com.nanke.nanketop.Util.LimitRequest;
-import com.nanke.nanketop.Util.Uuid;
+import cn.xbjstd.xiaobao.util.Json;
+import cn.xbjstd.xiaobao.util.LimitRequest;
+import cn.xbjstd.xiaobao.util.Uuid;
 import com.nanke.nanketop.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

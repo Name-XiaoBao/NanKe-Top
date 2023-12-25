@@ -1,8 +1,8 @@
 package com.nanke.nanketop.contoller;
 
+import cn.xbjstd.xiaobao.util.Json;
+import cn.xbjstd.xiaobao.util.LimitRequest;
 import com.nanke.nanketop.Util.EmailUtil;
-import com.nanke.nanketop.Util.Json;
-import com.nanke.nanketop.Util.LimitRequest;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
