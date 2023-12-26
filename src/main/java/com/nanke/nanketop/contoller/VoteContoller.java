@@ -16,7 +16,6 @@ public class VoteContoller {
     @Autowired
     private VoteService voteService;
     Json json = new Json();
-    Uuid uuid = new Uuid();
     @LimitRequest(time = 86400000, count = 1,msg = "每24小时只能发布一次哦~\n距离上一次发布还不到24小时呢！")
     /**
      * 创建投票
@@ -34,7 +33,7 @@ public class VoteContoller {
     @PostMapping("/addVote")
     public Json addVote(String user_username,String cover,String title,String deadline,String registration_time,String end_registration_time,int vote_num,String backgroundMusic,String rule){
         try {
-            if(voteService.addVote(user_username,uuid.generateRandomNumber(),cover,title,deadline,registration_time,end_registration_time,vote_num,backgroundMusic,rule)==1){
+            if (voteService.addVote(user_username, Uuid.generateRandomNumber(), cover, title, deadline, registration_time, end_registration_time, vote_num, backgroundMusic, rule) == 1) {
                 json.json(200,"创建成功",null);
             }
             return json;

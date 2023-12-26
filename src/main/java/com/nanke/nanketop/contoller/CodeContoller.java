@@ -15,7 +15,6 @@ public class CodeContoller {
     @Autowired
     private EmailUtil emailUtil;
     Json json=new Json();
-    VerificationCode Vc=new VerificationCode();
     /**
      * 发送验证码（间隔1分钟一次）
      * @param email 邮箱账号
@@ -25,7 +24,7 @@ public class CodeContoller {
     @PostMapping("/getCode")
     public Json sendAuthCodeEmail(String email) {
         //随机验证码
-        String code=Vc.generateVerifyCode(6);
+        String code = VerificationCode.generateVerifyCode(6);
         try {
             emailUtil.TemplateCodeEmail(email,"您的验证码是："+code);
             // 没有出现异常，正常发送，返回true

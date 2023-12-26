@@ -7,7 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 class NanKeTopApplicationTests {
 
     @Test
-    void contextLoads() {
+    void test() {
+
+        System.out.println();
     }
 
 }
