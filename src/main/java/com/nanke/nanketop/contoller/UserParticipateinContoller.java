@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserParticipateinContoller {
     @Autowired
     private UserParticipateinService userParticipateinService;
-    Json json=new Json();
-    Uuid uuid=new Uuid();
 
     /**
      * 参与投票
@@ -24,19 +22,18 @@ public class UserParticipateinContoller {
      */
     @PostMapping("/ParticipateInVoting")
     public Json ParticipateInVoting(String participatingUsers,long voteUid,String picture,String title,String content){
-        if (userParticipateinService.根据username和uid查询是否参与投票(participatingUsers,voteUid)==null){
+        if (userParticipateinService.根据username和uid查询是否参与投票(participatingUsers, voteUid) == null) {
             try {
-                if(userParticipateinService.insertUserParticipatein(uuid.generateRandomNumber(),participatingUsers,voteUid,picture,title,content)==1){
-                    json.json(200,"参与成功",null);
+                if (userParticipateinService.insertUserParticipatein(Uuid.generateRandomNumber(), participatingUsers, voteUid, picture, title, content) == 1) {
+                    return Json.json(200, "参与成功", null);
+                } else {
+                    return Json.json(501, "参与失败", null);
                 }
-                return json;
-            }catch (Exception err){
-                json.json(501,"参与失败",err);
-                return json;
+            } catch (Exception err) {
+                return Json.json(501, "参与失败", err);
             }
-        }else {
-            json.json(501,"你已经参与过啦~\n一人只能参与一次哦~",null);
-            return json;
+        } else {
+            return Json.json(501, "你已经参与过啦~\n一人只能参与一次哦~", null);
         }
     }
 
@@ -47,8 +44,7 @@ public class UserParticipateinContoller {
      */
     @PostMapping("/QueryBasedOnUid")
     public Json QueryBasedOnUid(long uid){
-        json.json(200,"查询成功",userParticipateinService.QueryBasedOnUid(uid));
-        return json;
+        return Json.json(200, "查询成功", userParticipateinService.QueryBasedOnUid(uid));
     }
 
     /**
@@ -58,7 +54,6 @@ public class UserParticipateinContoller {
      */
     @PostMapping("/QueryParticipatingUsers")
     public Json 参与的投票(String username){
-        json.json(200,"查询成功",userParticipateinService.参与的投票(username));
-        return json;
+        return Json.json(200, "查询成功", userParticipateinService.参与的投票(username));
     }
 }

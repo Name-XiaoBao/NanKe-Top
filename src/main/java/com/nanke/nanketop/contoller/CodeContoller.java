@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class CodeContoller {
     @Autowired
     private EmailUtil emailUtil;
-    Json json=new Json();
     /**
      * 发送验证码（间隔1分钟一次）
      * @param email 邮箱账号
@@ -28,13 +27,9 @@ public class CodeContoller {
         try {
             emailUtil.TemplateCodeEmail(email,"您的验证码是："+code);
             // 没有出现异常，正常发送，返回true
-            json.json(200,"发送成功", DigestUtils.md5DigestAsHex(code.getBytes()));
-            return json;
+            return Json.json(200, "发送成功", DigestUtils.md5DigestAsHex(code.getBytes()));
         } catch (MessagingException e) {
-            // 发送过程中，发生错误，打印错误信息，返回false
-            e.printStackTrace();
-            json.json(501,"发送失败",e);
-            return json;
+            return Json.json(400, "发送失败", e);
         }
     }
 }

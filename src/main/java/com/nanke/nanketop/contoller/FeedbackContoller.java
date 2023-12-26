@@ -12,17 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class FeedbackContoller {
     @Autowired
     private EmailUtil emailUtil;
-    Json json=new Json();
-    @LimitRequest(time = 180000,count = 1,msg = "请求过于频繁")
     @RequestMapping("/Feedback")
+    @LimitRequest(time = 180000, count = 1, msg = "请求过于频繁")
     public Json Feedback(String Content, String ContactInformation) {
         try {
             emailUtil.TemplateFeedbackEmail(Content,ContactInformation);
-            json.json(200,"发送成功",null);
-            return json;
+            return Json.json(200, "发送成功", null);
         } catch (MessagingException e) {
-            json.json(501,"发送失败",e);
-            return json;
+            return Json.json(501, "发送失败", e);
         }
     }
 }

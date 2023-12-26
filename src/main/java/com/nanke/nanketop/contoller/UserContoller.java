@@ -11,19 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserContoller {
     @Autowired
     private UserService userService;
-    Json json=new Json();
     @PostMapping("/Register")
     public Json Register(String nickname,String username, String password){
         if (userService.quireUsername(username)!=null){
-            json.json(501,"该用户已存在",null);
-            return json;
+            return Json.json(501, "该用户已存在", null);
         }
         if (userService.Register(nickname,username,DigestUtils.md5DigestAsHex(password.getBytes()))==0){
-            json.json(501,"注册失败",null);
+            return Json.json(501, "注册失败", null);
         }else {
-            json.json(200,"注册成功",null);
+            return Json.json(200, "注册成功", null);
         }
-        return json;
     }
 
     /**
@@ -35,15 +32,13 @@ public class UserContoller {
     @PostMapping("/Login")
     public Json Login(String username, String password){
         if (userService.quireUsername(username)==null){
-            json.json(404,"该用户不存在",null);
-            return json;
+            return Json.json(404, "该用户不存在", null);
         }
         if(userService.quireUsernameByPassword(username,DigestUtils.md5DigestAsHex(password.getBytes()))==null){
-            json.json(501,"账号或密码错误",null);
+            return Json.json(501, "账号或密码错误", null);
         }else {
-            json.json(200,"登录成功",userService.quireUsernameByPassword(username,DigestUtils.md5DigestAsHex(password.getBytes())));
+            return Json.json(200, "登录成功", userService.quireUsernameByPassword(username, DigestUtils.md5DigestAsHex(password.getBytes())));
         }
-        return json;
     }
 
     /**
@@ -53,8 +48,7 @@ public class UserContoller {
      */
     @PostMapping("/userInfo")
     public Json userInfo(String username){
-        json.json(200,"获取成功",userService.userInfo(username));
-        return json;
+        return Json.json(200, "获取成功", userService.userInfo(username));
     }
 
     /**
@@ -67,11 +61,10 @@ public class UserContoller {
     @PostMapping("/updateUserInfo")
     public Json updateUserInfo(String username,String avatar,String nickname){
         if (userService.updateUserInfo(username,avatar,nickname)==0){
-            json.json(501,"修改失败",null);
+            return Json.json(501, "修改失败", null);
         }else {
-            json.json(200,"修改成功",null);
+            return Json.json(200, "修改成功", null);
         }
-        return json;
     }
 
     /**
@@ -83,10 +76,9 @@ public class UserContoller {
     @PostMapping("/updatePasswoed")
     public Json updatePasswoed(String username,String password){
         if (userService.updatePasswoed(username,DigestUtils.md5DigestAsHex(password.getBytes()))==0){
-            json.json(501,"修改失败",null);
+            return Json.json(501, "修改失败", null);
         }else {
-            json.json(200,"修改成功",null);
+            return Json.json(200, "修改成功", null);
         }
-        return json;
     }
 }

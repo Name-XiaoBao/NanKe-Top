@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class VoteContoller {
     @Autowired
     private VoteService voteService;
-    Json json = new Json();
-    @LimitRequest(time = 86400000, count = 1,msg = "每24小时只能发布一次哦~\n距离上一次发布还不到24小时呢！")
     /**
      * 创建投票
      * @param user_username
@@ -31,15 +29,16 @@ public class VoteContoller {
      * @return
      */
     @PostMapping("/addVote")
+    @LimitRequest(time = 86400000, count = 1, msg = "每24小时只能发布一次哦~\n距离上一次发布还不到24小时呢！")
     public Json addVote(String user_username,String cover,String title,String deadline,String registration_time,String end_registration_time,int vote_num,String backgroundMusic,String rule){
         try {
             if (voteService.addVote(user_username, Uuid.generateRandomNumber(), cover, title, deadline, registration_time, end_registration_time, vote_num, backgroundMusic, rule) == 1) {
-                json.json(200,"创建成功",null);
+                return Json.json(200, "创建成功", null);
+            } else {
+                return Json.json(501, "创建失败", null);
             }
-            return json;
-        }catch (Exception err){
-            json.json(501,"创建失败",err);
-            return json;
+        } catch (Exception err) {
+            return Json.json(501, "创建失败", err);
         }
     }
 
@@ -50,8 +49,7 @@ public class VoteContoller {
      */
     @PostMapping("/addViews")
     public Json addViews(long uid){
-        json.json(200,"浏览量+1",voteService.addViews(uid));
-        return json;
+        return Json.json(200, "浏览量+1", voteService.addViews(uid));
     }
     /**
      * 获取投票列表
@@ -59,8 +57,7 @@ public class VoteContoller {
      */
     @PostMapping("/getVoteList")
     public Json getVoteList(){
-        json.json(200,"获取投票列表成功",voteService.getVoteList());
-        return json;
+        return Json.json(200, "获取投票列表成功", voteService.getVoteList());
     }
 
     /**
@@ -71,11 +68,10 @@ public class VoteContoller {
     @PostMapping("/getVoteByUid")
     public Json getVoteByUid(long uid) {
         if (voteService.getVoteByUid(uid) != null){
-            json.json(200, "获取成功", voteService.getVoteByUid(uid));
+            return Json.json(200, "获取成功", voteService.getVoteByUid(uid));
         }else {
-            json.json(404, "该投票已被删除或不存在！", voteService.getVoteByUid(uid));
+            return Json.json(404, "该投票已被删除或不存在！", voteService.getVoteByUid(uid));
         }
-        return json;
     }
 
     /**
@@ -85,7 +81,6 @@ public class VoteContoller {
      */
     @PostMapping("/getVoteByUsername")
     public Json getVoteByUsername(String username){
-        json.json(200,"获取投票列表成功",voteService.getVoteByUsername(username));
-        return json;
+        return Json.json(200, "获取投票列表成功", voteService.getVoteByUsername(username));
     }
 }

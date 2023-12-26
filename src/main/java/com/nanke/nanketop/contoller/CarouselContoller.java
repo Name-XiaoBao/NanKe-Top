@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class CarouselContoller {
     @Autowired
     private CarouselService carouselService;
-    Json json=new Json();
 
     /**
      * 获取轮播图列表
@@ -18,7 +17,6 @@ public class CarouselContoller {
      */
     @PostMapping("/CarouselList")
     public Json getCarouselList(){
-        json.json(200,"获取成功",carouselService.getCarouselList());
-        return json;
+        return Json.json(200, "获取成功", carouselService.getCarouselList());
     }
 }

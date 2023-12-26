@@ -13,7 +13,6 @@ public class VoterContoller {
     private VoterService voterService;
     @Autowired
     private HttpServletRequest request;
-    Json json=new Json();
 
     /**
      * 根据uid和参与选手uid进行投票
@@ -26,14 +25,12 @@ public class VoterContoller {
         try {
             String clientIp = getClientIp();
             if (voterService.insertVoter(clientIp, voteUid, participatingUid)){
-                json.json(200,"投票成功", null);
+                return Json.json(200, "投票成功", null);
             }else {
-                json.json(404,"今天的投票次数已经没有啦！\n请明天再来吧~", null);
+                return Json.json(404, "今天的投票次数已经没有啦！\n请明天再来吧~", null);
             }
-            return json;
         }catch (Exception e){
-            json.json(500,"投票失败", e);
-            return json;
+            return Json.json(500, "投票失败", e);
         }
     }
 
