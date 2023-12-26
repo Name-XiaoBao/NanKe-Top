@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-@MapperScan({"com.nanke.nanketop", "cn.xbjstd.xiaobao"})
+@MapperScan("com.nanke.nanketop")
 @ComponentScan({"com.nanke.nanketop", "cn.xbjstd.xiaobao"})
 @EnableScheduling
 public class NanKeTopApplication {
